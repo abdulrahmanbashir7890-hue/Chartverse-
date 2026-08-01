@@ -1,69 +1,99 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
 
-export default function SignupPage() {
-  return (
-    <div className="min-h-screen bg-white flex items-center justify-center px-6">
+import { useNavigate } from "react-router-dom";
 
-      <div className="w-full max-w-md">
+import { register } from "../services/auth";
 
-        <h1 className="text-4xl font-bold text-center text-red-600">
-          Create Account
-        </h1>
+export default function SignupPage(){
 
-        <p className="text-center text-gray-500 mt-2">
-          Join millions of users on ChatVerse
-        </p>
+const navigate=useNavigate();
 
-        <form className="mt-8 space-y-4">
+const [email,setEmail]=useState("");
 
-          <input
-            type="text"
-            placeholder="Full Name"
-            className="w-full border rounded-xl p-4"
-          />
+const [password,setPassword]=useState("");
 
-          <input
-            type="text"
-            placeholder="Username"
-            className="w-full border rounded-xl p-4"
-          />
+const [loading,setLoading]=useState(false);
 
-          <input
-            type="email"
-            placeholder="Email"
-            className="w-full border rounded-xl p-4"
-          />
+const signup=async(e:any)=>{
 
-          <input
-            type="password"
-            placeholder="Password"
-            className="w-full border rounded-xl p-4"
-          />
+e.preventDefault();
 
-          <input
-            type="password"
-            placeholder="Confirm Password"
-            className="w-full border rounded-xl p-4"
-          />
+try{
 
-          <button
-            className="w-full bg-red-600 text-white rounded-xl py-4 font-bold">
-            Create Account
-          </button>
+setLoading(true);
 
-          <p className="text-center">
-            Already have an account?{" "}
-            <Link
-              to="/login"
-              className="text-red-600 font-bold">
-              Login
-            </Link>
-          </p>
+await register(email,password);
 
-        </form>
+navigate("/dashboard");
 
-      </div>
+}catch{
 
-    </div>
-  );
+alert("Registration Failed");
+
+}finally{
+
+setLoading(false);
+
+}
+
+};
+
+return(
+
+<div className="min-h-screen flex items-center justify-center">
+
+<form
+
+onSubmit={signup}
+
+className="bg-white shadow-xl rounded-2xl p-8 w-[380px]">
+
+<h1 className="text-3xl font-bold text-red-600 text-center">
+
+Create Account
+
+</h1>
+
+<input
+
+type="email"
+
+placeholder="Email"
+
+value={email}
+
+onChange={(e)=>setEmail(e.target.value)}
+
+className="w-full border p-4 rounded-xl mt-6"
+
+/>
+
+<input
+
+type="password"
+
+placeholder="Password"
+
+value={password}
+
+onChange={(e)=>setPassword(e.target.value)}
+
+className="w-full border p-4 rounded-xl mt-4"
+
+/>
+
+<button
+
+className="w-full bg-red-600 text-white py-4 rounded-xl mt-6">
+
+{loading?"Creating...":"Create Account"}
+
+</button>
+
+</form>
+
+</div>
+
+);
+
 }
