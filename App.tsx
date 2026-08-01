@@ -1,4 +1,3 @@
-import { Routes, Route } from "react-router-dom";
 
 import SplashPage from "./pages/SplashPage";
 import WelcomePage from "./pages/WelcomePage";
