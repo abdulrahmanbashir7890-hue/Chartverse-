@@ -8,6 +8,9 @@ import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
 import OTPVerificationPage from "./pages/OTPVerificationPage";
 import PhoneLoginPage from "./pages/PhoneLoginPage";
+import DashboardPage from "./pages/DashboardPage";
+
+import ProtectedRoute from "./components/ProtectedRoute";
 
 export default function App(){
 
@@ -30,6 +33,15 @@ return(
 <Route path="/otp" element={<OTPVerificationPage/>}/>
 
 <Route path="/phone-login" element={<PhoneLoginPage/>}/>
+
+<Route
+path="/dashboard"
+element={
+<ProtectedRoute>
+<DashboardPage/>
+</ProtectedRoute>
+}
+/>
 
 </Routes>
 
